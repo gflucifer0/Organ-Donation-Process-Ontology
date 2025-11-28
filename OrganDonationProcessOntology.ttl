@@ -1,0 +1,865 @@
+@prefix : <http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/> .
+
+<http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology> rdf:type owl:Ontology .
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.w3.org/2001/XMLSchema#duration
+xsd:duration rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology#contraindicatedBy
+:contraindicatedBy rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf owl:topObjectProperty ;
+                   rdfs:domain :Organ ,
+                               :PotentialOrganDonor ;
+                   rdfs:range :MedicalCondition .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology#diagnosisFor
+:diagnosisFor rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf owl:topObjectProperty ;
+              owl:inverseOf :hasDiagnosis ;
+              rdfs:domain :DiagnosisOfBrainDeath ;
+              rdfs:range :Person .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology#donatedOrgan
+:donatedOrgan rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf owl:topObjectProperty ;
+              owl:inverseOf :isDonatedFrom ;
+              rdfs:domain :OrganDonor ;
+              rdfs:range :Organ .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology#hasProcurement
+:hasProcurement rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf owl:topObjectProperty ;
+                owl:inverseOf :resultsFrom ;
+                rdfs:domain :OrganProcurement ;
+                rdfs:range :Organ .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology#isAuthorizedBy
+:isAuthorizedBy rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf owl:topObjectProperty ;
+                rdfs:domain :OrganProcurement ;
+                rdfs:range :Consent .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology#isSuitableFor
+:isSuitableFor rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf owl:topObjectProperty ;
+               rdfs:domain :Organ ;
+               rdfs:range :Recipient .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology#occursIn
+:occursIn rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          rdfs:domain :DiagnosisOfBrainDeath ;
+          rdfs:range :BrainDeathAssessment .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/confirms
+:confirms rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          rdfs:domain :Test ;
+          rdfs:range :DiagnosisOfBrainDeath .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/hasConsent
+:hasConsent rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf owl:topObjectProperty .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/hasDiagnosis
+:hasDiagnosis rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf owl:topObjectProperty ;
+              rdfs:domain :Person ;
+              rdfs:range :DiagnosisOfBrainDeath .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/hasMember
+:hasMember rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf owl:topObjectProperty ;
+           rdfs:domain :CollegioMedico .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/hasRole
+:hasRole rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf owl:topObjectProperty ;
+         rdfs:domain :Person .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/involves
+:involves rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/isConductedBy
+:isConductedBy rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf owl:topObjectProperty ;
+               rdfs:domain :BrainDeathAssessment ;
+               rdfs:range :CollegioMedico .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/isDonatedFrom
+:isDonatedFrom rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf owl:topObjectProperty ;
+               rdfs:domain :Organ ;
+               rdfs:range :OrganDonor .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/isPerformedBy
+:isPerformedBy rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf owl:topObjectProperty ;
+               rdfs:domain :Transplant ;
+               rdfs:range :OperatingRoomPersonnel .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/isPreconditionOf
+:isPreconditionOf rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf owl:topObjectProperty ;
+                  rdfs:domain :Consent ;
+                  rdfs:range :OrganProcurement .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/isProvidedBy
+:isProvidedBy rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf owl:topObjectProperty ;
+              rdfs:domain :DiagnosisOfBrainDeath ;
+              rdfs:range :CollegioMedico .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/isTransplantedInto
+:isTransplantedInto rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf owl:topObjectProperty ;
+                    rdfs:domain :Organ ;
+                    rdfs:range :Recipient .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/issuedBy
+:issuedBy rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          rdfs:domain :DiagnosisOfBrainDeath ;
+          rdfs:range :CollegioMedico .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/issuedFor
+:issuedFor rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf owl:topObjectProperty .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/participatesIn
+:participatesIn rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf owl:topObjectProperty ;
+                rdfs:domain :FamilyMember ,
+                            :MeetingWithFamilyMembers .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/precedes
+:precedes rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          rdfs:domain :BrainDeathAssessment ;
+          rdfs:range :DiagnosisOfBrainDeath .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/requires
+:requires rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          rdfs:domain :OrganDonationProcess ;
+          rdfs:range :PotentialOrganDonor .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/resultsFrom
+:resultsFrom rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf owl:topObjectProperty ;
+             rdfs:domain :Organ ;
+             rdfs:range :OrganProcurement .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/retrieves
+:retrieves rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf owl:topObjectProperty ;
+           rdfs:domain :OrganProcurement ;
+           rdfs:range :Organ .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/age
+:age rdf:type owl:DatatypeProperty ;
+     rdfs:subPropertyOf owl:topDataProperty ;
+     rdfs:domain :Person ;
+     rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/apneaTestResult
+:apneaTestResult rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf owl:topDataProperty ;
+                 rdfs:domain :DiagnosisOfBrainDeath ;
+                 rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/bloodType
+:bloodType rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf owl:topDataProperty ;
+           rdfs:domain :Person ;
+           rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/brainstemReflexAbsent
+:brainstemReflexAbsent rdf:type owl:DatatypeProperty ;
+                       rdfs:subPropertyOf owl:topDataProperty ;
+                       rdfs:domain :DiagnosisOfBrainDeath ;
+                       rdfs:range xsd:boolean .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/causesOfDeath
+:causesOfDeath rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty ;
+               rdfs:domain :CertificateOfDeath ;
+               rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/certificateNumber
+:certificateNumber rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf owl:topDataProperty ;
+                   rdfs:domain :CertificateOfDeath ;
+                   rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/coldischemiaTime
+:coldischemiaTime rdf:type owl:DatatypeProperty ;
+                  rdfs:subPropertyOf owl:topDataProperty ;
+                  rdfs:domain :Organ ;
+                  rdfs:range xsd:duration .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/consentDate
+:consentDate rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty ;
+             rdfs:domain :Consent ;
+             rdfs:range xsd:dateTime .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/consentStatus
+:consentStatus rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty ;
+               rdfs:domain :Consent ;
+               rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/consentType
+:consentType rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty ;
+             rdfs:domain :Consent ;
+             rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/diagnosisDate
+:diagnosisDate rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty ;
+               rdfs:domain :DiagnosisOfBrainDeath ;
+               rdfs:range xsd:dateTime .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/discussionTopics
+:discussionTopics rdf:type owl:DatatypeProperty ;
+                  rdfs:subPropertyOf owl:topDataProperty ;
+                  rdfs:domain :MeetingWithFamilyMembers ;
+                  rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/eegResult
+:eegResult rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf owl:topDataProperty ;
+           rdfs:domain :DiagnosisOfBrainDeath ;
+           rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/familyMembersPresent
+:familyMembersPresent rdf:type owl:DatatypeProperty ;
+                      rdfs:subPropertyOf owl:topDataProperty ;
+                      rdfs:domain :MeetingWithFamilyMembers ;
+                      rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/issuanceDate
+:issuanceDate rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf owl:topDataProperty ;
+              rdfs:domain :CertificateOfDeath ;
+              rdfs:range xsd:dateTime .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/meetingDate
+:meetingDate rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty ;
+             rdfs:domain :MeetingWithFamilyMembers ;
+             rdfs:range xsd:dateTime .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/meetingLocation
+:meetingLocation rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf owl:topDataProperty ;
+                 rdfs:domain :MeetingWithFamilyMembers ;
+                 rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/observationDuration
+:observationDuration rdf:type owl:DatatypeProperty ;
+                     rdfs:subPropertyOf owl:topDataProperty ;
+                     rdfs:domain :DiagnosisOfBrainDeath ;
+                     rdfs:range xsd:duration .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/organQuality
+:organQuality rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf owl:topDataProperty ;
+              rdfs:domain :Organ ;
+              rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/organType
+:organType rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf owl:topDataProperty ;
+           rdfs:domain :Organ ;
+           rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/personalIdentifier
+:personalIdentifier rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf owl:topDataProperty ;
+                    rdfs:domain :Person ;
+                    rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/potentialOrganDonorSuitability
+:potentialOrganDonorSuitability rdf:type owl:DatatypeProperty ;
+                                rdfs:subPropertyOf owl:topDataProperty ;
+                                rdfs:domain :PotentialOrganDonor ;
+                                rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/preservationMethod
+:preservationMethod rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf owl:topDataProperty ;
+                    rdfs:domain :Organ ;
+                    rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/processEndDate
+:processEndDate rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf owl:topDataProperty ;
+                rdfs:domain :OrganDonationProcess ;
+                rdfs:range xsd:dateTime .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/processStartDate
+:processStartDate rdf:type owl:DatatypeProperty ;
+                  rdfs:subPropertyOf owl:topDataProperty ;
+                  rdfs:domain :OrganDonationProcess ;
+                  rdfs:range xsd:dateTime .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/processStatus
+:processStatus rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty ;
+               rdfs:domain :OrganDonationProcess ;
+               rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/procurementDate
+:procurementDate rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf owl:topDataProperty ;
+                 rdfs:domain :OrganProcurement ;
+                 rdfs:range xsd:dateTime .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/retrievalTime
+:retrievalTime rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty ;
+               rdfs:domain :OrganProcurement ;
+               rdfs:range xsd:duration .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/role
+:role rdf:type owl:DatatypeProperty ;
+      rdfs:subPropertyOf owl:topDataProperty ;
+      rdfs:domain :Person ;
+      rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/surgeonName
+:surgeonName rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty ;
+             rdfs:domain :TransplantSurgeons ;
+             rdfs:range xsd:string .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/transplantDate
+:transplantDate rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf owl:topDataProperty ;
+                rdfs:domain :Transplant ;
+                rdfs:range xsd:dateTime .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/transplantDuration
+:transplantDuration rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf owl:topDataProperty ;
+                    rdfs:domain :Transplant ;
+                    rdfs:range xsd:duration .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/transplantOutcome
+:transplantOutcome rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf owl:topDataProperty ;
+                   rdfs:domain :Transplant ;
+                   rdfs:range xsd:string .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology#AbsoluteContraindication
+:AbsoluteContraindication rdf:type owl:Class ;
+                          rdfs:subClassOf :MedicalCondition ;
+                          rdfs:comment "Conditions that always exclude the potential organ donor." .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology#DeceasedPerson
+:DeceasedPerson rdf:type owl:Class ;
+                rdfs:subClassOf :Person ;
+                owl:disjointWith :FamilyMember ,
+                                 :IntensiveCarePersonnel ,
+                                 :OperatingRoomPersonnel ,
+                                 :Patient ,
+                                 :Recipient .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology#MedicalCondition
+:MedicalCondition rdf:type owl:Class ;
+                  rdfs:subClassOf owl:Thing .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology#NotSuitableDonor
+:NotSuitableDonor rdf:type owl:Class ;
+                  owl:equivalentClass [ owl:intersectionOf ( :PotentialOrganDonor
+                                                             [ rdf:type owl:Restriction ;
+                                                               owl:onProperty :contraindicatedBy ;
+                                                               owl:someValuesFrom :AbsoluteContraindication
+                                                             ]
+                                                           ) ;
+                                        rdf:type owl:Class
+                                      ] ;
+                  rdfs:subClassOf :PotentialOrganDonor .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology#OrganSpecificContraindication
+:OrganSpecificContraindication rdf:type owl:Class ;
+                               rdfs:subClassOf :MedicalCondition ;
+                               rdfs:comment "Conditions that only exclude certain organs from the donation process. CronicKidneyDisease excludes the kidneys; Cirrhosis excludes the liver." .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology#RelativeContraindication
+:RelativeContraindication rdf:type owl:Class ;
+                          rdfs:subClassOf :MedicalCondition ;
+                          rdfs:comment "Conditions that require specific assessment." .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/Agent
+:Agent rdf:type owl:Class ;
+       rdfs:subClassOf owl:Thing .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/Anaesthesiologist
+:Anaesthesiologist rdf:type owl:Class ;
+                   rdfs:subClassOf :Role .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/Anatomopathologist
+:Anatomopathologist rdf:type owl:Class ;
+                    rdfs:subClassOf :Role .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/ApneaTest
+:ApneaTest rdf:type owl:Class ;
+           rdfs:subClassOf :Test .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/ApneaTest01
+:ApneaTest01 rdf:type owl:Class ;
+             rdfs:subClassOf :ApneaTest .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/ApneaTest02
+:ApneaTest02 rdf:type owl:Class ;
+             rdfs:subClassOf :ApneaTest .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/Bone
+:Bone rdf:type owl:Class ;
+      rdfs:subClassOf :Organ ;
+      owl:disjointWith :Cornea ,
+                       :Heart ,
+                       :Kidney ,
+                       :Liver ,
+                       :Lung ,
+                       :Pancreas ,
+                       :Uterus .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/BrainDeathAssessment
+:BrainDeathAssessment rdf:type owl:Class ;
+                      rdfs:subClassOf owl:Thing .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/BrainstemReflexTest
+:BrainstemReflexTest rdf:type owl:Class ;
+                     rdfs:subClassOf :Test .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/BrainstemReflexTest01
+:BrainstemReflexTest01 rdf:type owl:Class ;
+                       rdfs:subClassOf :BrainstemReflexTest .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/BrainstemReflexTest02
+:BrainstemReflexTest02 rdf:type owl:Class ;
+                       rdfs:subClassOf :BrainstemReflexTest .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/CertificateOfDeath
+:CertificateOfDeath rdf:type owl:Class ;
+                    rdfs:subClassOf owl:Thing .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/CollegioMedico
+:CollegioMedico rdf:type owl:Class ;
+                rdfs:subClassOf :Agent .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/Consent
+:Consent rdf:type owl:Class ;
+         rdfs:subClassOf owl:Thing .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/ConsentAcquisition
+:ConsentAcquisition rdf:type owl:Class ;
+                    rdfs:subClassOf owl:Thing .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/Cornea
+:Cornea rdf:type owl:Class ;
+        rdfs:subClassOf :Organ ;
+        owl:disjointWith :Heart ,
+                         :Kidney ,
+                         :Liver ,
+                         :Lung ,
+                         :Pancreas ,
+                         :Uterus .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/DeathNotification
+:DeathNotification rdf:type owl:Class ;
+                   rdfs:subClassOf :MeetingWithFamilyMembers .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/DiagnosisOfBrainDeath
+:DiagnosisOfBrainDeath rdf:type owl:Class ;
+                       rdfs:subClassOf owl:Thing .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/DonationProposal
+:DonationProposal rdf:type owl:Class ;
+                  rdfs:subClassOf :MeetingWithFamilyMembers .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/EEG
+:EEG rdf:type owl:Class ;
+     rdfs:subClassOf :Test .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/EEG01
+:EEG01 rdf:type owl:Class ;
+       rdfs:subClassOf :EEG .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/EEG02
+:EEG02 rdf:type owl:Class ;
+       rdfs:subClassOf :EEG .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/FamilyMember
+:FamilyMember rdf:type owl:Class ;
+              rdfs:subClassOf :Person .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/Forensic
+:Forensic rdf:type owl:Class ;
+          rdfs:subClassOf :Role .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/GeneralEvaluation
+:GeneralEvaluation rdf:type owl:Class ;
+                   rdfs:subClassOf :PotentialOrganDonorSuitabilityEvaluation .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/Heart
+:Heart rdf:type owl:Class ;
+       rdfs:subClassOf :Organ ;
+       owl:disjointWith :Kidney ,
+                        :Liver ,
+                        :Lung ,
+                        :Pancreas ,
+                        :Uterus .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/IntensiveCareAnaesthesiologist
+:IntensiveCareAnaesthesiologist rdf:type owl:Class ;
+                                rdfs:subClassOf :IntensiveCarePersonnel ;
+                                owl:disjointWith :IntensiveCareNurse .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/IntensiveCareNurse
+:IntensiveCareNurse rdf:type owl:Class ;
+                    rdfs:subClassOf :IntensiveCarePersonnel .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/IntensiveCarePersonnel
+:IntensiveCarePersonnel rdf:type owl:Class ;
+                        rdfs:subClassOf :Person .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/Kidney
+:Kidney rdf:type owl:Class ;
+        rdfs:subClassOf :Organ ;
+        owl:disjointWith :Liver ,
+                         :Lung ,
+                         :Pancreas ,
+                         :Uterus .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/Liver
+:Liver rdf:type owl:Class ;
+       rdfs:subClassOf :Organ ;
+       owl:disjointWith :Lung ,
+                        :Pancreas ,
+                        :Uterus .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/Lung
+:Lung rdf:type owl:Class ;
+      rdfs:subClassOf :Organ ;
+      owl:disjointWith :Pancreas ,
+                       :Uterus .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/MeetingWithFamilyMembers
+:MeetingWithFamilyMembers rdf:type owl:Class ;
+                          rdfs:subClassOf owl:Thing .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/Neurologist
+:Neurologist rdf:type owl:Class ;
+             rdfs:subClassOf :Role .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/OperatingRoomAnaesthesiologist
+:OperatingRoomAnaesthesiologist rdf:type owl:Class ;
+                                rdfs:subClassOf :OperatingRoomPersonnel ;
+                                owl:disjointWith :OperatingRoomNurse ,
+                                                 :TransplantSurgeons .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/OperatingRoomNurse
+:OperatingRoomNurse rdf:type owl:Class ;
+                    rdfs:subClassOf :OperatingRoomPersonnel ;
+                    owl:disjointWith :TransplantSurgeons .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/OperatingRoomPersonnel
+:OperatingRoomPersonnel rdf:type owl:Class ;
+                        rdfs:subClassOf :Person .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/Organ
+:Organ rdf:type owl:Class ;
+       rdfs:subClassOf owl:Thing ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :isDonatedFrom ;
+                         owl:someValuesFrom :OrganDonor
+                       ] .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/OrganDonationProcess
+:OrganDonationProcess rdf:type owl:Class ;
+                      rdfs:subClassOf owl:Thing .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/OrganDonor
+:OrganDonor rdf:type owl:Class ;
+            rdfs:subClassOf :PotentialOrganDonor .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/OrganEvaluation
+:OrganEvaluation rdf:type owl:Class ;
+                 rdfs:subClassOf :PotentialOrganDonorSuitabilityEvaluation .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/OrganProcurement
+:OrganProcurement rdf:type owl:Class ;
+                  rdfs:subClassOf owl:Thing .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/Pancreas
+:Pancreas rdf:type owl:Class ;
+          rdfs:subClassOf :Organ ;
+          owl:disjointWith :Uterus .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/Patient
+:Patient rdf:type owl:Class ;
+         rdfs:subClassOf :Person .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/Person
+:Person rdf:type owl:Class ;
+        rdfs:subClassOf owl:Thing .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/PotentialOrganDonor
+:PotentialOrganDonor rdf:type owl:Class ;
+                     rdfs:subClassOf :DeceasedPerson .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/PotentialOrganDonorIdentification
+:PotentialOrganDonorIdentification rdf:type owl:Class ;
+                                   rdfs:subClassOf owl:Thing .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/PotentialOrganDonorSuitabilityEvaluation
+:PotentialOrganDonorSuitabilityEvaluation rdf:type owl:Class ;
+                                          rdfs:subClassOf owl:Thing .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/Recipient
+:Recipient rdf:type owl:Class ;
+           rdfs:subClassOf :Person .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/Role
+:Role rdf:type owl:Class ;
+      rdfs:subClassOf owl:Thing .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/SupportToFamily
+:SupportToFamily rdf:type owl:Class ;
+                 rdfs:subClassOf :MeetingWithFamilyMembers .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/Test
+:Test rdf:type owl:Class ;
+      rdfs:subClassOf owl:Thing ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :confirms ;
+                        owl:someValuesFrom :DiagnosisOfBrainDeath
+                      ] .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/Transplant
+:Transplant rdf:type owl:Class ;
+            rdfs:subClassOf owl:Thing .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/TransplantSurgeons
+:TransplantSurgeons rdf:type owl:Class ;
+                    rdfs:subClassOf :OperatingRoomPersonnel .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology/Uterus
+:Uterus rdf:type owl:Class ;
+        rdfs:subClassOf :Organ .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology#ActiveTubercolosis
+:ActiveTubercolosis rdf:type owl:NamedIndividual ,
+                             :AbsoluteContraindication .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology#ChronicKidneyDisease
+:ChronicKidneyDisease rdf:type owl:NamedIndividual ,
+                               :OrganSpecificContraindication .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology#Cirrhosis
+:Cirrhosis rdf:type owl:NamedIndividual ,
+                    :OrganSpecificContraindication .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology#HBVInfection
+:HBVInfection rdf:type owl:NamedIndividual ,
+                       :RelativeContraindication .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology#HCVInfection
+:HCVInfection rdf:type owl:NamedIndividual ,
+                       :RelativeContraindication .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology#HIVInfection
+:HIVInfection rdf:type owl:NamedIndividual ,
+                       :AbsoluteContraindication .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology#Hypertension
+:Hypertension rdf:type owl:NamedIndividual ,
+                       :RelativeContraindication .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology#MetastaticNeoplasm
+:MetastaticNeoplasm rdf:type owl:NamedIndividual ,
+                             :AbsoluteContraindication .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology#PrionDisease
+:PrionDisease rdf:type owl:NamedIndividual ,
+                       :AbsoluteContraindication .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology#SepsisMultiDrugResistant
+:SepsisMultiDrugResistant rdf:type owl:NamedIndividual ,
+                                   :AbsoluteContraindication .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology#TreatedNeoplasm
+:TreatedNeoplasm rdf:type owl:NamedIndividual ,
+                          :RelativeContraindication .
+
+
+###  http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology#UnknownEtiologyComa
+:UnknownEtiologyComa rdf:type owl:NamedIndividual ,
+                              :AbsoluteContraindication .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
