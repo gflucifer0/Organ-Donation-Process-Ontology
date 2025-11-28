@@ -53,14 +53,14 @@ OrganDonationOntology/
 #### Option 1: GitHub Pages (Recommended)
 If GitHub Pages is enabled for this repository, the documentation is available at:
 ```
-https://[your-username].github.io/[repository-name]/docs/
+https://gflucifer0.github.io/Organ-Donation-Process-Ontology/docs/
 ```
 
 #### Option 2: Local Viewing
 1. Clone this repository:
    ```bash
-   git clone https://github.com/[your-username]/[repository-name].git
-   cd [repository-name]
+   git clone https://github.com/gflucifer0/Organ-Donation-Process-Ontology.git
+   cd Organ-Donation-Process-Ontology
    ```
 
 2. Open the documentation:
@@ -141,7 +141,7 @@ If you use this ontology in your research, please cite:
   author = {Lucifero, Giacomo F. and Gangemi, Aldo},
   year = {2025},
   institution = {Alma Mater Studiorum - University of Bologna},
-  url = {https://github.com/[your-username]/[repository-name]},
+  url = {https://github.com/gflucifer0/Organ-Donation-Process-Ontology},
   note = {Version 1.0.0}
 }
 ```
