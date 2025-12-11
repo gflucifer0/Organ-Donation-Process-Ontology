@@ -1,21 +1,19 @@
 # Organ Donation Process Ontology (ODPO)
 
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC_BY%204.0-blue.svg)](LICENSE)
-[![Ontology Format: OWL](https://img.shields.io/badge/Format-OWL%202-orange.svg)](ontology/OrganDonationProcessOntology.ttl)
+[![Ontology Format: OWL](https://img.shields.io/badge/Format-OWL%202-orange.svg)](OrganDonationProcessOntology.ttl)
 
 ## Overview
 
-The **Organ Donation Process Ontology (ODPO)** is a semantic framework designed to formally represent the organ donation workflow within the Italian National Health System context. The ontology models key entities such as clinical actors, medical protocols, and donor suitability criteria, aligned with the guidelines of the Italian National Transplant Center (CNT).
+The **Organ Donation Process Ontology (ODPO)** is a semantic framework designed to formally represent the organ donation workflow within the Italian National Health System context.
+Conceived as an open and extensible knowledge base, ODPO is intended as a dynamic tool for educational, professional and informative purposes. It enables the simulation of clinical scenarios, making it a resource for training medical personnel and enhancing public transparency regarding the safety and rigor of the organ donation and transplantation process. Its modular structure allows for continuous updates in response to evolving medical standards and legal regulations.
 
-Conceived as an open and extensible knowledge base, ODPO is intended as a dynamic tool for information, educational, and training purposes. It enables the simulation of clinical scenarios, making it a resource for training medical personnel and enhancing public transparency regarding the safety and rigor of the organ donation and transplantation process. Its modular structure allows for continuous updates in response to evolving medical standards and legal regulations.
-
-## Key Features
+## Features
 
 - **Formal Representation**: Comprehensive OWL 2 ontology modeling the complete organ donation process
 - **Italian Healthcare Context**: Aligned with CNT (Centro Nazionale Trapianti) guidelines and regulations
 - **Educational Focus**: Designed to support information dissemination and training activities
 - **Extensible Architecture**: Modular structure allowing for continuous updates and extensions
-- **Multiple Serializations**: Available in Turtle (.ttl), RDF/XML (.owl), JSON-LD, and N-Triples formats
 
 ## Documentation
 
@@ -46,56 +44,6 @@ OrganDonationOntology/
         └── index.html     # Interactive ontology visualization
 ```
 
-## Quick Start
-
-### Viewing the Ontology
-
-#### Option 1: GitHub Pages (Recommended)
-If GitHub Pages is enabled for this repository, the documentation is available at:
-```
-https://gflucifer0.github.io/Organ-Donation-Process-Ontology/docs/
-```
-
-#### Option 2: Local Viewing
-1. Clone this repository:
-   ```bash
-   git clone https://github.com/gflucifer0/Organ-Donation-Process-Ontology.git
-   cd Organ-Donation-Process-Ontology
-   ```
-
-2. Open the documentation:
-   - Open `docs/index-en.html` in a web browser
-   - For WebVOWL visualization, open `docs/webvowl/index.html`
-
-#### Option 3: WebVOWL Online
-You can also visualize the ontology using the online WebVOWL tool:
-1. Go to [http://vowl.visualdataweb.org/webvowl.html](http://vowl.visualdataweb.org/webvowl.html)
-2. Load the ontology from: `ontology/OrganDonationProcessOntology.ttl`
-
-### Using the Ontology
-
-#### Loading in Protégé
-1. Download [Protégé](https://protege.stanford.edu/)
-2. Open Protégé and select "Open from File"
-3. Navigate to `ontology/OrganDonationProcessOntology.ttl`
-4. The ontology will load with all classes, properties, and individuals
-
-#### Programmatic Access
-The ontology can be loaded using any OWL-compatible library:
-
-**Python (using owlready2):**
-```python
-from owlready2 import *
-onto = get_ontology("ontology/OrganDonationProcessOntology.ttl").load()
-```
-
-**Java (using OWL API):**
-```java
-OWLOntologyManager manager = OWLManager.createOWLOntologyManager();
-IRI ontologyIRI = IRI.create("file://path/to/OrganDonationProcessOntology.ttl");
-OWLOntology ontology = manager.loadOntology(ontologyIRI);
-```
-
 ## Ontology Details
 
 - **IRI**: `http://www.semanticweb.org/giacomo_lucifero/ontologies/2025/10/organ-donation-process-ontology`
@@ -103,22 +51,11 @@ OWLOntology ontology = manager.loadOntology(ontologyIRI);
 - **Language**: OWL 2 DL
 - **Primary Format**: Turtle (.ttl)
 
-### Main Classes
-- `OrganDonationProcess`: Central process entity
-- `PotentialDonor`: Potential organ donor
-- `Recipient`: Organ recipient
-- `DiagnosisOfBrainDeath`: Brain death diagnosis procedure
-- `OrganProcurement`: Organ procurement process
-- `Transplant`: Transplantation procedure
-- `FamilyMember`: Family members involved in the process
-- `MeetingWithFamilyMembers`: Family consultation meetings
-
-## Authors
+## Author
 
 - **Giacomo F. Lucifero** - Alma Mater Studiorum - University of Bologna  
-  Email: [giacomo.lucifero@studio.unibo.it](mailto:giacomo.lucifero@studio.unibo.it)
 
-### Contributors
+### Contributor
 - **Prof. Aldo Gangemi** - Alma Mater Studiorum - University of Bologna
 
 ## Sources and References
@@ -131,38 +68,6 @@ OWLOntology ontology = manager.loadOntology(ontologyIRI);
 
 This work is licensed under a [Creative Commons Attribution 4.0 International License](http://creativecommons.org/licenses/by/4.0/).
 
-## Citation
-
-If you use this ontology in your research, please cite:
-
-```bibtex
-@ontology{odpo2025,
-  title = {Organ Donation Process Ontology (ODPO)},
-  author = {Lucifero, Giacomo F. and Gangemi, Aldo},
-  year = {2025},
-  institution = {Alma Mater Studiorum - University of Bologna},
-  url = {https://github.com/gflucifer0/Organ-Donation-Process-Ontology},
-  note = {Version 1.0.0}
-}
-```
-
 ## Contributing
 
 Contributions, issues, and feature requests are welcome! Please feel free to open an issue or submit a pull request.
-
-## Acknowledgments
-
-- Documentation generated using [Widoco](https://github.com/dgarijo/Widoco)
-- Visualization powered by [WebVOWL](http://vowl.visualdataweb.org/webvowl.html)
-- Cross-reference section generated using [LODE](http://www.essepuntato.it/lode)
-
-## Status
-
-**Current Status**: Ontology Specification Draft
-
-This ontology is under active development. Feedback and suggestions are highly appreciated.
-
----
-
-For more information, visit the [documentation](docs/index-en.html) or contact the authors.
-

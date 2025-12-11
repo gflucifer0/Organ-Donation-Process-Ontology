@@ -1,6 +1,6 @@
 # Use Cases - Organ Donation Process Ontology (ODPO)
 
-This document describes three practical use cases of the ODPO ontology, demonstrating how SPARQL queries and automatic reasoning can solve real-world problems in the context of organ donation in Italy.
+This document describes three use cases of the ODPO ontology (1. Educational, 2. Clinical, 3. Informative), demonstrating how SPARQL queries and automatic reasoning can provide solutions to real-world problems in the context of organ donation in Italy both on a professional and unprofessional level.
 
 ---
 
@@ -14,7 +14,7 @@ This document describes three practical use cases of the ODPO ontology, demonstr
 A patient in an irreversible coma undergoes brain death assessment. According to the Italian protocol, the assessment requires the execution of **three mandatory tests**:
 1. **Apnea Test** (two measurements: ApneaTest01 and ApneaTest02)
 2. **Brainstem Reflex Test** (two measurements: BrainstemReflexTest01 and BrainstemReflexTest02)
-3. **Neurological confirmation test** (performed by a Medical Board - Collegio Medico)
+3. **Electroencephalogram (EEG)** (two measurements: EEG01 and EEG02)
 
 In the case under examination, the system records only two tests (ApneaTest01 and BrainstemReflexTest01), missing the confirmation measurements. The ontology must identify this incompleteness and signal that the diagnosis process is invalid.
 
@@ -139,18 +139,18 @@ The reasoner will automatically classify a `DiagnosisOfBrainDeath` as `CompleteB
 - The OWL reasoner classifies the diagnosis as `CompleteBrainDeathDiagnosis`
 - The system confirms: **"Brain death assessment complete and valid"**
 
-**Added Value**: This use case supports medical staff training by showing exactly which components are missing in the process, improving compliance with CNT protocols.
+This particular kind of use case is intended to support medical staff training by showing exactly which components are missing in the process.
 
 ---
 
 ## Use Case 2: Automatic Exclusion of a Donor Due to Absolute Contraindication
 
 ### Title and Objective
-**Type**: Informative/Clinical  
+**Type**: Clinical  
 **Objective**: Automatically identify unsuitable donors based on absolute contraindications (e.g., HIV infection), using automatic OWL reasoning to ensure safety and regulatory compliance.
 
 ### Clinical Scenario
-A deceased potential donor presents a medical history that includes a diagnosis of **HIV infection** (HIVInfection). According to CNT guidelines, HIV is an **absolute contraindication** (`AbsoluteContraindication`) that completely excludes the donor from the donation process, regardless of the organ considered.
+A deceased potential donor presents a diagnosis of **ongoing HIV infection** (HIVInfection). According to CNT guidelines, an ongoing HIV infection is an **absolute contraindication** (`AbsoluteContraindication`) that completely excludes the donor from the donation process, regardless of the organ considered.
 
 The system must:
 1. Automatically detect the presence of HIV in the donor
@@ -223,19 +223,13 @@ odpo:HIVInfection
 2. **Automatic Notification**: The system generates an alert: **"Donor excluded: absolute contraindication (HIV)"**
 3. **Traceability**: The exclusion is recorded in the process log for audit purposes
 
-**Added Value**: 
-- **Safety**: Prevents human errors that could compromise recipient safety
-- **Efficiency**: Eliminates redundant manual evaluations
-- **Compliance**: Ensures automatic adherence to CNT guidelines
-
-**Extension**: The same logic applies to other absolute contraindications (e.g., prion diseases, active malignant neoplasms).
-
+This particular kind of use is intended to be conducted and supervised by healthcare professionals in order to provide step-by-step control of the procedures implemented.
 ---
 
 ## Use Case 3: Traceability of a Safe Organ from Suitable Donor to Recipient
 
 ### Title and Objective
-**Type**: Informative/Educational  
+**Type**: Informative 
 **Objective**: Provide complete and transparent traceability of an organ's path from the moment of donation until transplantation, demonstrating the safety and rigor of the process for informational and public transparency purposes.
 
 ### Clinical Scenario
@@ -283,7 +277,7 @@ WHERE {
     # Transplant
     ?organ odpo:isTransplantedInto ?recipient .
     ?transplant rdf:type odpo:Transplant .
-    ?transplant odpo:isPerformedBy ?personnel .
+    ?transplant odpo:involves ?organ .
     OPTIONAL {
         ?transplant odpo:transplantDate ?transplantDate .
     }
@@ -338,7 +332,7 @@ WHERE {
     
     # Transplant outcome
     ?transplant rdf:type odpo:Transplant .
-    ?transplant odpo:isPerformedBy ?personnel .
+    ?transplant odpo:involves ?organ .
     OPTIONAL {
         ?transplant odpo:transplantOutcome ?transplantOutcome .
     }
@@ -403,35 +397,11 @@ SAFETY STATUS: ✅ SAFE
 These three use cases demonstrate how the ODPO ontology supports:
 
 1. **Training** (Case 1): Automatic verification of clinical process completeness
-2. **Clinical Safety** (Case 2): Automatic exclusion of unsuitable donors
-3. **Transparency and Dissemination** (Case 3): Complete traceability for public information
-
-The combined use of **SPARQL queries** and **OWL reasoning** enables:
-- **Automation** of critical processes, reducing human errors
-- **Compliance** with CNT guidelines
-- **Transparency** for the public and regulatory authorities
-- **Support for training** of medical personnel
-
----
-
-## Technical Notes
-
-### Recommended Tools
-
-- **Protégé** (https://protege.stanford.edu/): OWL editor with integrated reasoners (HermiT, Pellet)
-- **Apache Jena** (https://jena.apache.org/): Framework for SPARQL queries on OWL ontologies
-- **OWLready2** (Python): Library for OWL reasoning in Python
-- **SPARQL Endpoint**: For interactive queries on loaded ontologies
-
-### Future Extensions
-
-- Integration with hospital information systems (HIS)
-- Interactive dashboards for use case visualization
-- REST API for programmatic access to queries
-- Extensions for other organ types and contraindications
+2. **Control** (Case 2): Automatic exclusion of unsuitable donors
+3. **Transparency** (Case 3): Complete traceability for public information
 
 ---
 
 **Version**: 1.0  
-**Date**: 2025  
+**Date**: 2025-02  
 **Author**: Giacomo F. Lucifero, Alma Mater Studiorum - University of Bologna
