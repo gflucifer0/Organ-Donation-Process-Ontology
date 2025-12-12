@@ -11,7 +11,7 @@ This document describes three use cases of the ODPO ontology (1. Educational, 2.
 **Objective**: Verify that all mandatory tests for brain death assessment have been correctly executed, ensuring compliance with CNT (Centro Nazionale Trapianti) guidelines.
 
 ### Clinical Scenario
-A patient in an irreversible coma undergoes brain death assessment. According to the Italian protocol, the assessment requires the execution of **three mandatory tests**:
+A dead patient undergoes brain death assessment. According to the Italian protocol, the assessment requires the execution of **three mandatory tests**:
 1. **Apnea Test** (two measurements: ApneaTest01 and ApneaTest02)
 2. **Brainstem Reflex Test** (two measurements: BrainstemReflexTest01 and BrainstemReflexTest02)
 3. **Electroencephalogram (EEG)** (two measurements: EEG01 and EEG02)
@@ -74,6 +74,26 @@ WHERE {
     }
     UNION
     {
+        # Verify presence of EEG01
+        FILTER NOT EXISTS {
+            ?eeg01 rdf:type odpo:EEG01 ;
+                   odpo:confirms ?diagnosis .
+        }
+        BIND("EEG01" AS ?missingTest)
+        BIND("EEG" AS ?testType)
+    }
+    UNION
+    {
+        # Verify presence of EEG02
+        FILTER NOT EXISTS {
+            ?eeg02 rdf:type odpo:EEG02 ;
+                   odpo:confirms ?diagnosis .
+        }
+        BIND("EEG02" AS ?missingTest)
+        BIND("EEG" AS ?testType)
+    }
+    UNION
+    {
         # Verify presence of CollegioMedico (issuing authority)
         FILTER NOT EXISTS {
             ?diagnosis odpo:isProvidedBy ?collegio .
@@ -115,6 +135,14 @@ odpo:CompleteBrainDeathDiagnosis
             [ rdf:type owl:Restriction ;
               owl:onProperty [ owl:inverseOf odpo:confirms ] ;
               owl:someValuesFrom odpo:BrainstemReflexTest02
+            ]
+            [ rdf:type owl:Restriction ;
+              owl:onProperty [ owl:inverseOf odpo:confirms ] ;
+              owl:someValuesFrom odpo:EEG01
+            ]
+            [ rdf:type owl:Restriction ;
+              owl:onProperty [ owl:inverseOf odpo:confirms ] ;
+              owl:someValuesFrom odpo:EEG02
             ]
         )
     ] .
@@ -403,5 +431,5 @@ These three use cases demonstrate how the ODPO ontology supports:
 ---
 
 **Version**: 1.0  
-**Date**: 2025-02  
+**Date**: 12/2025  
 **Author**: Giacomo F. Lucifero, Alma Mater Studiorum - University of Bologna
