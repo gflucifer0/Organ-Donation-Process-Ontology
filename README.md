@@ -39,8 +39,8 @@ Conceived as an open and extensible knowledge base, ODPO is intended as a dynami
 ## Sources and References
 
 - [Italian National Transplant Center (CNT)](https://www.trapianti.salute.gov.it/)
-- [SIT - Sistema Informativo Trapianti](https://trapianti.sanita.it/statistiche/)
 - [CNT - Il SIT Sistema Informativo Trapianti](https://www.trapianti.salute.gov.it/it/cnt-pagina/il-sit-sistema-informativo-trapianti/)
+- [SIT - Sistema Informativo Trapianti](https://trapianti.sanita.it/statistiche/)
 
 ## License
 
