@@ -1,0 +1,1161 @@
+@prefix : <<https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@base <https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl> .
+
+<https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl> rdf:type owl:Ontology ;
+                                                                        dc:creator "Giacomo Francesco Lucifero" ;
+                                                                        dc:date "2026-06" ;
+                                                                        dc:description "An OWL ontology representing the clinical and administrative workflow of organ donation, from brain death diagnosis to organ transplantation, with regard to the italian national healthcare system (SSN)."@en ;
+                                                                        rdfs:comment "This ontology models the organ donation process, including the identification of potential organ donors, brain death assessment, contraindications, consent acquisition, organ procurement, and transplant. It covers the roles of medical personnel, legal documents, and the clinical workflow."@en ;
+                                                                        rdfs:label "Organ Donation Process Ontology (ODPO)"@en ;
+                                                                        owl:versionInfo "1.0" .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://purl.org/dc/elements/1.1/creator
+dc:creator rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/elements/1.1/date
+dc:date rdf:type owl:AnnotationProperty .
+
+
+###  http://purl.org/dc/elements/1.1/description
+dc:description rdf:type owl:AnnotationProperty .
+
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.w3.org/2001/XMLSchema#duration
+xsd:duration rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/confirms
+:confirms rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          rdfs:domain :Test ;
+          rdfs:range :DiagnosisOfBrainDeath ;
+          rdfs:comment "Relates a diagnostic test to the diagnosis of brain death it contributes to confirming."@en ;
+          rdfs:label "confirms"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/contraindicatedBy
+:contraindicatedBy rdf:type owl:ObjectProperty ;
+                   rdfs:subPropertyOf owl:topObjectProperty ;
+                   rdfs:domain [ rdf:type owl:Class ;
+                                 owl:unionOf ( :ContraindicationObject
+                                               :Organ
+                                               :PotentialOrganDonor
+                                             )
+                               ] ;
+                   rdfs:range :MedicalCondition ;
+                   rdfs:comment "Relates a potential organ donor, a specific organ, or a contraindication target in general to a medical condition that constitutes a contraindication to donation. The domain is a union of ContraindicationTarget, Organ and PotentialOrganDonor to avoid unintended inferences."@en ;
+                   rdfs:label "contraindicatedBy"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/diagnosisFor
+:diagnosisFor rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf owl:topObjectProperty ;
+              owl:inverseOf :hasDiagnosis ;
+              rdfs:domain :DiagnosisOfBrainDeath ;
+              rdfs:range :Person ;
+              rdfs:comment "Relates a diagnosis of brain death to the person it concerns. Inverse of hasDiagnosis."@en ;
+              rdfs:label "diagnosisFor"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/donatedOrgan
+:donatedOrgan rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf owl:topObjectProperty ;
+              owl:inverseOf :isDonatedFrom ;
+              rdfs:domain :OrganDonor ;
+              rdfs:range :Organ ;
+              rdfs:comment "Relates an organ donor to the organ that has been donated. Inverse of isDonatedFrom."@en ;
+              rdfs:label "donatedOrgan"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/hasConsent
+:hasConsent rdf:type owl:ObjectProperty ;
+            rdfs:subPropertyOf owl:topObjectProperty ;
+            rdfs:comment "Relates an entity to the consent document associated with the organ donation."@en ;
+            rdfs:label "hasConsent"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/hasDiagnosis
+:hasDiagnosis rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf owl:topObjectProperty ;
+              rdfs:domain :Person ;
+              rdfs:range :DiagnosisOfBrainDeath ;
+              rdfs:comment "Relates a person to their brain death diagnosis. Inverse of diagnosisFor."@en ;
+              rdfs:label "hasDiagnosis"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/hasMember
+:hasMember rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf owl:topObjectProperty ;
+           rdfs:domain :CollegioMedico ;
+           rdfs:comment "Relates the CollegioMedico (medical panel) to its individual medical members."@en ;
+           rdfs:label "hasMember"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/hasProcurement
+:hasProcurement rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf owl:topObjectProperty ;
+                owl:inverseOf :resultsFrom ;
+                rdfs:domain :OrganProcurement ;
+                rdfs:range :Organ ;
+                rdfs:comment "Relates an organ procurement event to the organ retrieved. Inverse of resultsFrom."@en ;
+                rdfs:label "hasProcurement"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/hasRole
+:hasRole rdf:type owl:ObjectProperty ;
+         rdfs:subPropertyOf owl:topObjectProperty ;
+         rdfs:domain :Person ;
+         rdfs:comment "Relates a person to their professional role in the organ donation process."@en ;
+         rdfs:label "hasRole"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/involves
+:involves rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          rdfs:comment "Generic relation indicating that a process or event involves an entity."@en ;
+          rdfs:label "involves"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/isAuthorizedBy
+:isAuthorizedBy rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf owl:topObjectProperty ;
+                rdfs:domain :OrganProcurement ;
+                rdfs:range :Consent ;
+                rdfs:comment "Relates an organ procurement event to the consent that authorises it."@en ;
+                rdfs:label "isAuthorizedBy"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/isConductedBy
+:isConductedBy rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf owl:topObjectProperty ;
+               rdfs:domain :BrainDeathAssessment ;
+               rdfs:range :CollegioMedico ;
+               rdfs:comment "Relates a brain death assessment procedure to the medical panel (CollegioMedico) that conducts it."@en ;
+               rdfs:label "isConductedBy"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/isDonatedFrom
+:isDonatedFrom rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf owl:topObjectProperty ;
+               rdfs:domain :Organ ;
+               rdfs:range :OrganDonor ;
+               rdfs:comment "Relates an organ to the organ donor it has been retrieved from. Inverse of donatedOrgan."@en ;
+               rdfs:label "isDonatedFrom"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/isPerformedBy
+:isPerformedBy rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf owl:topObjectProperty ;
+               rdfs:domain :Transplant ;
+               rdfs:range :OperatingRoomPersonnel ;
+               rdfs:comment "Relates a transplant operation to the operating room personnel who perform it."@en ;
+               rdfs:label "isPerformedBy"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/isPreconditionOf
+:isPreconditionOf rdf:type owl:ObjectProperty ;
+                  rdfs:subPropertyOf owl:topObjectProperty ;
+                  rdfs:domain :Consent ;
+                  rdfs:range :OrganProcurement ;
+                  rdfs:comment "Relates consent to the organ procurement it is a legal precondition for."@en ;
+                  rdfs:label "isPreconditionOf"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/isProvidedBy
+:isProvidedBy rdf:type owl:ObjectProperty ;
+              rdfs:subPropertyOf owl:topObjectProperty ;
+              rdfs:domain :DiagnosisOfBrainDeath ;
+              rdfs:range :CollegioMedico ;
+              rdfs:comment "Relates a brain death diagnosis to the medical panel (CollegioMedico) that issues it."@en ;
+              rdfs:label "isProvidedBy"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/isSuitableFor
+:isSuitableFor rdf:type owl:ObjectProperty ;
+               rdfs:subPropertyOf owl:topObjectProperty ;
+               rdfs:domain :Organ ;
+               rdfs:range :Recipient ;
+               rdfs:comment "Relates an organ to the recipient it is clinically compatible with."@en ;
+               rdfs:label "isSuitableFor"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/isTransplantedInto
+:isTransplantedInto rdf:type owl:ObjectProperty ;
+                    rdfs:subPropertyOf owl:topObjectProperty ;
+                    rdfs:domain :Organ ;
+                    rdfs:range :Recipient ;
+                    rdfs:comment "Relates an organ to the recipient into whom it has been transplanted."@en ;
+                    rdfs:label "isTransplantedInto"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/issuedBy
+:issuedBy rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          rdfs:domain :DiagnosisOfBrainDeath ;
+          rdfs:range :CollegioMedico ;
+          rdfs:comment "Relates a diagnosis of brain death to the medical panel that formally issued it."@en ;
+          rdfs:label "issuedBy"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/issuedFor
+:issuedFor rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf owl:topObjectProperty ;
+           rdfs:comment "Relates a document or act to the person or process it was issued for."@en ;
+           rdfs:label "issuedFor"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/occursIn
+:occursIn rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          rdfs:domain :DiagnosisOfBrainDeath ;
+          rdfs:range :BrainDeathAssessment ;
+          rdfs:comment "Relates a brain death diagnosis to the assessment procedure within which it occurs."@en ;
+          rdfs:label "occursIn"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/participatesIn
+:participatesIn rdf:type owl:ObjectProperty ;
+                rdfs:subPropertyOf owl:topObjectProperty ;
+                rdfs:domain :FamilyMember ;
+                rdfs:range :MeetingWithFamilyMembers ;
+                rdfs:comment "Relates a family member to the meeting with family they participate in."@en ;
+                rdfs:label "participatesIn"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/precedes
+:precedes rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          rdfs:domain :BrainDeathAssessment ;
+          rdfs:range :DiagnosisOfBrainDeath ;
+          rdfs:comment "Relates a brain death assessment to the diagnosis of brain death it temporally precedes."@en ;
+          rdfs:label "precedes"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/requires
+:requires rdf:type owl:ObjectProperty ;
+          rdfs:subPropertyOf owl:topObjectProperty ;
+          rdfs:domain :OrganDonationProcess ;
+          rdfs:range :PotentialOrganDonor ;
+          rdfs:comment "Relates the organ donation process to the potential organ donor it requires as subject."@en ;
+          rdfs:label "requires"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/resultsFrom
+:resultsFrom rdf:type owl:ObjectProperty ;
+             rdfs:subPropertyOf owl:topObjectProperty ;
+             rdfs:domain :Organ ;
+             rdfs:range :OrganProcurement ;
+             rdfs:comment "Relates an organ to the procurement procedure it results from. Inverse of hasProcurement."@en ;
+             rdfs:label "resultsFrom"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/retrieves
+:retrieves rdf:type owl:ObjectProperty ;
+           rdfs:subPropertyOf owl:topObjectProperty ;
+           rdfs:domain :OrganProcurement ;
+           rdfs:range :Organ ;
+           rdfs:comment "Relates an organ procurement event to the organ that is retrieved."@en ;
+           rdfs:label "retrieves"@en .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/age
+:age rdf:type owl:DatatypeProperty ;
+     rdfs:subPropertyOf owl:topDataProperty ;
+     rdfs:domain :Person ;
+     rdfs:range xsd:integer ;
+     rdfs:comment "The age of a person in years."@en ;
+     rdfs:label "age"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/apneaTestResult
+:apneaTestResult rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf owl:topDataProperty ;
+                 rdfs:domain :DiagnosisOfBrainDeath ;
+                 rdfs:range xsd:string ;
+                 rdfs:comment "The result of the apnea test performed during brain death diagnosis."@en ;
+                 rdfs:label "apneaTestResult"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/bloodType
+:bloodType rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf owl:topDataProperty ;
+           rdfs:domain :Person ;
+           rdfs:range xsd:string ;
+           rdfs:comment "The ABO/Rh blood type of a person, relevant for organ compatibility."@en ;
+           rdfs:label "bloodType"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/brainstemReflexAbsent
+:brainstemReflexAbsent rdf:type owl:DatatypeProperty ;
+                       rdfs:subPropertyOf owl:topDataProperty ;
+                       rdfs:domain :DiagnosisOfBrainDeath ;
+                       rdfs:range xsd:boolean ;
+                       rdfs:comment "Boolean indicating whether brainstem reflexes are absent, a required criterion for brain death diagnosis."@en ;
+                       rdfs:label "brainstemReflexAbsent"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/causesOfDeath
+:causesOfDeath rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty ;
+               rdfs:domain :CertificateOfDeath ;
+               rdfs:range xsd:string ;
+               rdfs:comment "The causes of death recorded in the death certificate."@en ;
+               rdfs:label "causesOfDeath"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/certificateNumber
+:certificateNumber rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf owl:topDataProperty ;
+                   rdfs:domain :CertificateOfDeath ;
+                   rdfs:range xsd:string ;
+                   rdfs:comment "The unique identifier of the death certificate."@en ;
+                   rdfs:label "certificateNumber"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/coldischemiaTime
+:coldischemiaTime rdf:type owl:DatatypeProperty ;
+                  rdfs:subPropertyOf owl:topDataProperty ;
+                  rdfs:domain :Organ ;
+                  rdfs:range xsd:duration ;
+                  rdfs:comment "The duration of cold ischemia of an organ, i.e. the time the organ has been preserved at low temperature."@en ;
+                  rdfs:label "coldIschemiaTime"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/consentDate
+:consentDate rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty ;
+             rdfs:domain :Consent ;
+             rdfs:range xsd:dateTime ;
+             rdfs:comment "The date and time when consent for organ donation was given or recorded."@en ;
+             rdfs:label "consentDate"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/consentStatus
+:consentStatus rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty ;
+               rdfs:domain :Consent ;
+               rdfs:range xsd:string ;
+               rdfs:comment "The status of the consent, e.g. granted, refused, pending."@en ;
+               rdfs:label "consentStatus"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/consentType
+:consentType rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty ;
+             rdfs:domain :Consent ;
+             rdfs:range xsd:string ;
+             rdfs:comment "The type of consent, e.g. presumed, explicit, family-provided."@en ;
+             rdfs:label "consentType"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/diagnosisDate
+:diagnosisDate rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty ;
+               rdfs:domain :DiagnosisOfBrainDeath ;
+               rdfs:range xsd:dateTime ;
+               rdfs:comment "The date and time of the brain death diagnosis."@en ;
+               rdfs:label "diagnosisDate"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/discussionTopics
+:discussionTopics rdf:type owl:DatatypeProperty ;
+                  rdfs:subPropertyOf owl:topDataProperty ;
+                  rdfs:domain :MeetingWithFamilyMembers ;
+                  rdfs:range xsd:string ;
+                  rdfs:comment "The main topics discussed during the meeting with the patient's family."@en ;
+                  rdfs:label "discussionTopics"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/eegResult
+:eegResult rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf owl:topDataProperty ;
+           rdfs:domain :DiagnosisOfBrainDeath ;
+           rdfs:range xsd:string ;
+           rdfs:comment "The result of the EEG examination performed during brain death assessment."@en ;
+           rdfs:label "eegResult"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/familyMembersPresent
+:familyMembersPresent rdf:type owl:DatatypeProperty ;
+                      rdfs:subPropertyOf owl:topDataProperty ;
+                      rdfs:domain :MeetingWithFamilyMembers ;
+                      rdfs:range xsd:integer ;
+                      rdfs:comment "The number of family members present at the meeting."@en ;
+                      rdfs:label "familyMembersPresent"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/issuanceDate
+:issuanceDate rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf owl:topDataProperty ;
+              rdfs:domain :CertificateOfDeath ;
+              rdfs:range xsd:dateTime ;
+              rdfs:comment "The date on which the death certificate was officially issued."@en ;
+              rdfs:label "issuanceDate"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/meetingDate
+:meetingDate rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty ;
+             rdfs:domain :MeetingWithFamilyMembers ;
+             rdfs:range xsd:dateTime ;
+             rdfs:comment "The date and time of the meeting with the family."@en ;
+             rdfs:label "meetingDate"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/meetingLocation
+:meetingLocation rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf owl:topDataProperty ;
+                 rdfs:domain :MeetingWithFamilyMembers ;
+                 rdfs:range xsd:string ;
+                 rdfs:comment "The location where the meeting with the family took place."@en ;
+                 rdfs:label "meetingLocation"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/observationDuration
+:observationDuration rdf:type owl:DatatypeProperty ;
+                     rdfs:subPropertyOf owl:topDataProperty ;
+                     rdfs:domain :DiagnosisOfBrainDeath ;
+                     rdfs:range xsd:duration ;
+                     rdfs:comment "The legally required observation period to confirm brain death."@en ;
+                     rdfs:label "observationDuration"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/organQuality
+:organQuality rdf:type owl:DatatypeProperty ;
+              rdfs:subPropertyOf owl:topDataProperty ;
+              rdfs:domain :Organ ;
+              rdfs:range xsd:string ;
+              rdfs:comment "A qualitative assessment of the organ's condition for transplant."@en ;
+              rdfs:label "organQuality"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/organType
+:organType rdf:type owl:DatatypeProperty ;
+           rdfs:subPropertyOf owl:topDataProperty ;
+           rdfs:domain :Organ ;
+           rdfs:range xsd:string ;
+           rdfs:comment "The type of organ, e.g. heart, kidney, liver."@en ;
+           rdfs:label "organType"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/personalIdentifier
+:personalIdentifier rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf owl:topDataProperty ;
+                    rdfs:domain :Person ;
+                    rdfs:range xsd:string ;
+                    rdfs:comment "A unique personal identifier for a person, e.g. fiscal code or hospital ID."@en ;
+                    rdfs:label "personalIdentifier"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/potentialOrganDonorSuitability
+:potentialOrganDonorSuitability rdf:type owl:DatatypeProperty ;
+                                rdfs:subPropertyOf owl:topDataProperty ;
+                                rdfs:domain :PotentialOrganDonor ;
+                                rdfs:range xsd:string ;
+                                rdfs:comment "A textual assessment of the suitability of the potential organ donor."@en ;
+                                rdfs:label "potentialOrganDonorSuitability"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/preservationMethod
+:preservationMethod rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf owl:topDataProperty ;
+                    rdfs:domain :Organ ;
+                    rdfs:range xsd:string ;
+                    rdfs:comment "The preservation technique applied to the organ after retrieval, e.g. cold perfusion."@en ;
+                    rdfs:label "preservationMethod"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/processEndDate
+:processEndDate rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf owl:topDataProperty ;
+                rdfs:domain :OrganDonationProcess ;
+                rdfs:range xsd:dateTime ;
+                rdfs:comment "The date and time at which the organ donation process concluded."@en ;
+                rdfs:label "processEndDate"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/processStartDate
+:processStartDate rdf:type owl:DatatypeProperty ;
+                  rdfs:subPropertyOf owl:topDataProperty ;
+                  rdfs:domain :OrganDonationProcess ;
+                  rdfs:range xsd:dateTime ;
+                  rdfs:comment "The date and time at which the organ donation process began."@en ;
+                  rdfs:label "processStartDate"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/processStatus
+:processStatus rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty ;
+               rdfs:domain :OrganDonationProcess ;
+               rdfs:range xsd:string ;
+               rdfs:comment "The current status of the organ donation process, e.g. ongoing, completed, aborted."@en ;
+               rdfs:label "processStatus"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/procurementDate
+:procurementDate rdf:type owl:DatatypeProperty ;
+                 rdfs:subPropertyOf owl:topDataProperty ;
+                 rdfs:domain :OrganProcurement ;
+                 rdfs:range xsd:dateTime ;
+                 rdfs:comment "The date and time of the organ procurement procedure."@en ;
+                 rdfs:label "procurementDate"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/retrievalTime
+:retrievalTime rdf:type owl:DatatypeProperty ;
+               rdfs:subPropertyOf owl:topDataProperty ;
+               rdfs:domain :OrganProcurement ;
+               rdfs:range xsd:duration ;
+               rdfs:comment "The duration of the organ retrieval procedure."@en ;
+               rdfs:label "retrievalTime"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/role
+:role rdf:type owl:DatatypeProperty ;
+      rdfs:subPropertyOf owl:topDataProperty ;
+      rdfs:domain :Person ;
+      rdfs:range xsd:string ;
+      rdfs:comment "A textual description of the role of a person in the organ donation process."@en ;
+      rdfs:label "role"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/surgeonName
+:surgeonName rdf:type owl:DatatypeProperty ;
+             rdfs:subPropertyOf owl:topDataProperty ;
+             rdfs:domain :TransplantSurgeons ;
+             rdfs:range xsd:string ;
+             rdfs:comment "The full name of the transplant surgeon."@en ;
+             rdfs:label "surgeonName"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/transplantDate
+:transplantDate rdf:type owl:DatatypeProperty ;
+                rdfs:subPropertyOf owl:topDataProperty ;
+                rdfs:domain :Transplant ;
+                rdfs:range xsd:dateTime ;
+                rdfs:comment "The date and time of the transplant operation."@en ;
+                rdfs:label "transplantDate"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/transplantDuration
+:transplantDuration rdf:type owl:DatatypeProperty ;
+                    rdfs:subPropertyOf owl:topDataProperty ;
+                    rdfs:domain :Transplant ;
+                    rdfs:range xsd:duration ;
+                    rdfs:comment "The total duration of the transplant operation."@en ;
+                    rdfs:label "transplantDuration"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/transplantOutcome
+:transplantOutcome rdf:type owl:DatatypeProperty ;
+                   rdfs:subPropertyOf owl:topDataProperty ;
+                   rdfs:domain :Transplant ;
+                   rdfs:range xsd:string ;
+                   rdfs:comment "The clinical outcome of the transplant, e.g. successful, rejected."@en ;
+                   rdfs:label "transplantOutcome"@en .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/AbsoluteContraindication
+:AbsoluteContraindication rdf:type owl:Class ;
+                          rdfs:subClassOf :MedicalCondition ;
+                          rdfs:comment "A medical condition that always and unconditionally excludes a potential organ donor from the donation process."@en ;
+                          rdfs:label "Absolute Contraindication"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/Agent
+:Agent rdf:type owl:Class ;
+       rdfs:subClassOf owl:Thing ;
+       rdfs:comment "An entity, individual or collective, capable of acting in the organ donation process."@en ;
+       rdfs:label "Agent"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/Anaesthesiologist
+:Anaesthesiologist rdf:type owl:Class ;
+                   rdfs:subClassOf :Role ;
+                   rdfs:comment "The professional role of a physician specialised in anaesthesiology, involved in organ procurement and transplant."@en ;
+                   rdfs:label "Anaesthesiologist"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/Anatomopathologist
+:Anatomopathologist rdf:type owl:Class ;
+                    rdfs:subClassOf :Role ;
+                    rdfs:comment "The professional role of a physician specialised in anatomic pathology, involved in verifying causes of death."@en ;
+                    rdfs:label "Anatomopathologist"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/ApneaTest
+:ApneaTest rdf:type owl:Class ;
+           rdfs:subClassOf :Test ;
+           rdfs:comment "A clinical test that evaluates the absence of spontaneous breathing, required to confirm brain death."@en ;
+           rdfs:label "Apnea Test"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/ApneaTest01
+:ApneaTest01 rdf:type owl:Class ;
+             rdfs:subClassOf :ApneaTest ;
+             rdfs:comment "First apnea test performed during the brain death assessment observation period."@en ;
+             rdfs:label "Apnea Test 01"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/ApneaTest02
+:ApneaTest02 rdf:type owl:Class ;
+             rdfs:subClassOf :ApneaTest ;
+             rdfs:comment "Second apnea test performed during the brain death assessment observation period."@en ;
+             rdfs:label "Apnea Test 02"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/Bone
+:Bone rdf:type owl:Class ;
+      rdfs:subClassOf :Organ ;
+      owl:disjointWith :Cornea ,
+                       :Heart ,
+                       :Kidney ,
+                       :Liver ,
+                       :Lung ,
+                       :Pancreas ,
+                       :Uterus ;
+      rdfs:comment "Bone tissue that may be retrieved and donated. Disjoint with all other organ types."@en ;
+      rdfs:label "Bone"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/BrainDeathAssessment
+:BrainDeathAssessment rdf:type owl:Class ;
+                      rdfs:subClassOf owl:Thing ;
+                      rdfs:comment "The formal clinical procedure, regulated by law, to assess and certify the irreversible cessation of all brain functions."@en ;
+                      rdfs:label "Brain Death Assessment"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/BrainstemReflexTest
+:BrainstemReflexTest rdf:type owl:Class ;
+                     rdfs:subClassOf :Test ;
+                     rdfs:comment "A neurological test that evaluates the absence of brainstem reflexes as part of brain death diagnosis."@en ;
+                     rdfs:label "Brainstem Reflex Test"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/BrainstemReflexTest01
+:BrainstemReflexTest01 rdf:type owl:Class ;
+                       rdfs:subClassOf :BrainstemReflexTest ;
+                       rdfs:comment "First brainstem reflex test performed during the observation period."@en ;
+                       rdfs:label "Brainstem Reflex Test 01"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/BrainstemReflexTest02
+:BrainstemReflexTest02 rdf:type owl:Class ;
+                       rdfs:subClassOf :BrainstemReflexTest ;
+                       rdfs:comment "Second brainstem reflex test performed during the observation period."@en ;
+                       rdfs:label "Brainstem Reflex Test 02"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/CertificateOfDeath
+:CertificateOfDeath rdf:type owl:Class ;
+                    rdfs:subClassOf owl:Thing ;
+                    rdfs:comment "The official legal document certifying the death of a person, including causes of death."@en ;
+                    rdfs:label "Certificate of Death"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/CollegioMedico
+:CollegioMedico rdf:type owl:Class ;
+                rdfs:subClassOf :Agent ;
+                rdfs:comment "The medical panel composed of at least three physicians legally required to conduct the brain death assessment and issue the official diagnosis."@en ;
+                rdfs:label "Collegio Medico"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/Consent
+:Consent rdf:type owl:Class ;
+         rdfs:subClassOf owl:Thing ;
+         rdfs:comment "The legal act of consent to organ donation, given by the deceased prior to death or by the family."@en ;
+         rdfs:label "Consent"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/ConsentAcquisition
+:ConsentAcquisition rdf:type owl:Class ;
+                    rdfs:subClassOf owl:Thing ;
+                    rdfs:comment "The process through which consent for organ donation is gathered and formalised."@en ;
+                    rdfs:label "Consent Acquisition"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/ContraindicationObject
+:ContraindicationObject rdf:type owl:Class ;
+                        rdfs:subClassOf owl:Thing ;
+                        rdfs:comment "An abstract entity representing a person (a potential organ donor) or an object (a specific organ) that may be contraindicated by a medical condition. Used as part of the domain union for the contraindicatedBy property."@en ;
+                        rdfs:label "Contraindication Target"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/Cornea
+:Cornea rdf:type owl:Class ;
+        rdfs:subClassOf :Organ ;
+        owl:disjointWith :Heart ,
+                         :Kidney ,
+                         :Liver ,
+                         :Lung ,
+                         :Pancreas ,
+                         :Uterus ;
+        rdfs:comment "The cornea of the eye, a donatable tissue. Disjoint with all other organ types except Bone."@en ;
+        rdfs:label "Cornea"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/DeathNotification
+:DeathNotification rdf:type owl:Class ;
+                   rdfs:subClassOf :MeetingWithFamilyMembers ;
+                   rdfs:comment "The formal communication to the family of the patient's death."@en ;
+                   rdfs:label "Death Notification"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/DeceasedPerson
+:DeceasedPerson rdf:type owl:Class ;
+                rdfs:subClassOf :Person ;
+                owl:disjointWith :FamilyMember ,
+                                 :IntensiveCarePersonnel ,
+                                 :OperatingRoomPersonnel ,
+                                 :Patient ,
+                                 :Recipient ;
+                rdfs:comment "A person who has died and may become a potential organ donor. Disjoint with all living person categories."@en ;
+                rdfs:label "Deceased Person"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/DiagnosisOfBrainDeath
+:DiagnosisOfBrainDeath rdf:type owl:Class ;
+                       rdfs:subClassOf owl:Thing ;
+                       rdfs:comment "The official clinical diagnosis certifying the irreversible cessation of all brain activity, issued by the CollegioMedico."@en ;
+                       rdfs:label "Diagnosis of Brain Death"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/DonationProposal
+:DonationProposal rdf:type owl:Class ;
+                  rdfs:subClassOf :MeetingWithFamilyMembers ;
+                  rdfs:comment "The formal proposal of organ donation presented to the family during a dedicated meeting."@en ;
+                  rdfs:label "Donation Proposal"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/EEG
+:EEG rdf:type owl:Class ;
+     rdfs:subClassOf :Test ;
+     rdfs:comment "Electroencephalogram: a test measuring electrical brain activity. Required as confirmatory test for brain death diagnosis."@en ;
+     rdfs:label "EEG"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/EEG01
+:EEG01 rdf:type owl:Class ;
+       rdfs:subClassOf :EEG ;
+       rdfs:comment "First EEG performed during the observation period for brain death assessment."@en ;
+       rdfs:label "EEG 01"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/EEG02
+:EEG02 rdf:type owl:Class ;
+       rdfs:subClassOf :EEG ;
+       rdfs:comment "Second EEG performed at the end of the observation period for brain death assessment."@en ;
+       rdfs:label "EEG 02"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/FamilyMember
+:FamilyMember rdf:type owl:Class ;
+              rdfs:subClassOf :Person ;
+              rdfs:comment "A living relative of the deceased person who participates in the donation process meetings."@en ;
+              rdfs:label "Family Member"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/Forensic
+:Forensic rdf:type owl:Class ;
+          rdfs:subClassOf :Role ;
+          rdfs:comment "The professional role of a forensic physician, involved when the death may have medico-legal implications."@en ;
+          rdfs:label "Forensic"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/GeneralEvaluation
+:GeneralEvaluation rdf:type owl:Class ;
+                   rdfs:subClassOf :PotentialOrganDonorSuitabilityEvaluation ;
+                   rdfs:comment "A general clinical evaluation of the potential organ donor's overall suitability."@en ;
+                   rdfs:label "General Evaluation"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/Heart
+:Heart rdf:type owl:Class ;
+       rdfs:subClassOf :Organ ;
+       owl:disjointWith :Kidney ,
+                        :Liver ,
+                        :Lung ,
+                        :Pancreas ,
+                        :Uterus ;
+       rdfs:comment "The heart, a donatable solid organ. Disjoint with all other organ types."@en ;
+       rdfs:label "Heart"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/IntensiveCareAnaesthesiologist
+:IntensiveCareAnaesthesiologist rdf:type owl:Class ;
+                                rdfs:subClassOf :IntensiveCarePersonnel ;
+                                owl:disjointWith :IntensiveCareNurse ;
+                                rdfs:comment "An anaesthesiologist working in the intensive care unit, responsible for managing the potential organ donor."@en ;
+                                rdfs:label "Intensive Care Anaesthesiologist"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/IntensiveCareNurse
+:IntensiveCareNurse rdf:type owl:Class ;
+                    rdfs:subClassOf :IntensiveCarePersonnel ;
+                    rdfs:comment "A nurse working in the intensive care unit who assists in maintaining the potential organ donor."@en ;
+                    rdfs:label "Intensive Care Nurse"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/IntensiveCarePersonnel
+:IntensiveCarePersonnel rdf:type owl:Class ;
+                        rdfs:subClassOf :Person ;
+                        rdfs:comment "Medical and nursing staff working in the intensive care unit involved in the donor maintenance phase."@en ;
+                        rdfs:label "Intensive Care Personnel"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/Kidney
+:Kidney rdf:type owl:Class ;
+        rdfs:subClassOf :Organ ;
+        owl:disjointWith :Liver ,
+                         :Lung ,
+                         :Pancreas ,
+                         :Uterus ;
+        rdfs:comment "The kidney, a paired donatable solid organ. Disjoint with all other organ types."@en ;
+        rdfs:label "Kidney"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/Liver
+:Liver rdf:type owl:Class ;
+       rdfs:subClassOf :Organ ;
+       owl:disjointWith :Lung ,
+                        :Pancreas ,
+                        :Uterus ;
+       rdfs:comment "The liver, a donatable solid organ. Disjoint with all other organ types."@en ;
+       rdfs:label "Liver"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/Lung
+:Lung rdf:type owl:Class ;
+      rdfs:subClassOf :Organ ;
+      owl:disjointWith :Pancreas ,
+                       :Uterus ;
+      rdfs:comment "The lung, a paired donatable organ. Disjoint with all other organ types."@en ;
+      rdfs:label "Lung"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/MedicalCondition
+:MedicalCondition rdf:type owl:Class ;
+                  rdfs:subClassOf owl:Thing ;
+                  rdfs:comment "A clinical condition or pathology that may affect the suitability of a potential organ donor or a specific organ."@en ;
+                  rdfs:label "Medical Condition"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/MeetingWithFamilyMembers
+:MeetingWithFamilyMembers rdf:type owl:Class ;
+                          rdfs:subClassOf owl:Thing ;
+                          rdfs:comment "A structured encounter between medical staff and the family of the deceased, used for death notification, donation proposal, or family support."@en ;
+                          rdfs:label "Meeting with Family Members"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/Neurologist
+:Neurologist rdf:type owl:Class ;
+             rdfs:subClassOf :Role ;
+             rdfs:comment "The professional role of a neurologist, required as part of the CollegioMedico for brain death assessment."@en ;
+             rdfs:label "Neurologist"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/NotSuitableDonor
+:NotSuitableDonor rdf:type owl:Class ;
+                  owl:equivalentClass [ owl:intersectionOf ( :PotentialOrganDonor
+                                                             [ rdf:type owl:Restriction ;
+                                                               owl:onProperty :contraindicatedBy ;
+                                                               owl:someValuesFrom :AbsoluteContraindication
+                                                             ]
+                                                           ) ;
+                                        rdf:type owl:Class
+                                      ] ;
+                  rdfs:subClassOf :PotentialOrganDonor ;
+                  rdfs:comment "A potential organ donor who has at least one absolute contraindication and is therefore excluded from donation."@en ;
+                  rdfs:label "Not Suitable Donor"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/OperatingRoomAnaesthesiologist
+:OperatingRoomAnaesthesiologist rdf:type owl:Class ;
+                                rdfs:subClassOf :OperatingRoomPersonnel ;
+                                owl:disjointWith :OperatingRoomNurse ,
+                                                 :TransplantSurgeons ;
+                                rdfs:comment "An anaesthesiologist working in the operating room during organ procurement or transplant."@en ;
+                                rdfs:label "Operating Room Anaesthesiologist"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/OperatingRoomNurse
+:OperatingRoomNurse rdf:type owl:Class ;
+                    rdfs:subClassOf :OperatingRoomPersonnel ;
+                    owl:disjointWith :TransplantSurgeons ;
+                    rdfs:comment "A nurse assisting in the operating room during organ procurement or transplant."@en ;
+                    rdfs:label "Operating Room Nurse"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/OperatingRoomPersonnel
+:OperatingRoomPersonnel rdf:type owl:Class ;
+                        rdfs:subClassOf :Person ;
+                        rdfs:comment "All medical and nursing staff working in the operating room during organ procurement or transplant."@en ;
+                        rdfs:label "Operating Room Personnel"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/Organ
+:Organ rdf:type owl:Class ;
+       rdfs:subClassOf owl:Thing ,
+                       [ rdf:type owl:Restriction ;
+                         owl:onProperty :isDonatedFrom ;
+                         owl:someValuesFrom :OrganDonor
+                       ] ;
+       rdfs:comment "A human organ or tissue that can be retrieved from a donor and transplanted into a recipient."@en ;
+       rdfs:label "Organ"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/OrganDonationProcess
+:OrganDonationProcess rdf:type owl:Class ;
+                      rdfs:subClassOf owl:Thing ;
+                      rdfs:comment "The complete clinical and administrative workflow from the identification of a potential donor to organ transplantation."@en ;
+                      rdfs:label "Organ Donation Process"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/OrganDonor
+:OrganDonor rdf:type owl:Class ;
+            rdfs:subClassOf :PotentialOrganDonor ;
+            rdfs:comment "A potential organ donor who has been confirmed suitable and from whom organs have been retrieved."@en ;
+            rdfs:label "Organ Donor"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/OrganEvaluation
+:OrganEvaluation rdf:type owl:Class ;
+                 rdfs:subClassOf :PotentialOrganDonorSuitabilityEvaluation ;
+                 rdfs:comment "A specific evaluation of the condition and suitability of a single organ for donation."@en ;
+                 rdfs:label "Organ Evaluation"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/OrganProcurement
+:OrganProcurement rdf:type owl:Class ;
+                  rdfs:subClassOf owl:Thing ;
+                  rdfs:comment "The surgical procedure through which organs are retrieved from the donor in the operating room."@en ;
+                  rdfs:label "Organ Procurement"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/OrganSpecificContraindication
+:OrganSpecificContraindication rdf:type owl:Class ;
+                               rdfs:subClassOf :MedicalCondition ;
+                               rdfs:comment "A medical condition that excludes only specific organs from donation. Examples: chronic kidney disease excludes kidneys; cirrhosis excludes the liver."@en ;
+                               rdfs:label "Organ-Specific Contraindication"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/Pancreas
+:Pancreas rdf:type owl:Class ;
+          rdfs:subClassOf :Organ ;
+          owl:disjointWith :Uterus ;
+          rdfs:comment "The pancreas, a donatable solid organ. Disjoint with all other organ types."@en ;
+          rdfs:label "Pancreas"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/Patient
+:Patient rdf:type owl:Class ;
+         rdfs:subClassOf :Person ;
+         rdfs:comment "A person receiving medical care. In this context, distinguished from the deceased person and recipient."@en ;
+         rdfs:label "Patient"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/Person
+:Person rdf:type owl:Class ;
+        rdfs:subClassOf owl:Thing ;
+        rdfs:comment "A human individual involved in the organ donation process in any capacity."@en ;
+        rdfs:label "Person"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/PotentialOrganDonor
+:PotentialOrganDonor rdf:type owl:Class ;
+                     rdfs:subClassOf :DeceasedPerson ;
+                     rdfs:comment "A deceased person who has been identified as a candidate for organ donation and is undergoing suitability assessment."@en ;
+                     rdfs:label "Potential Organ Donor"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/PotentialOrganDonorIdentification
+:PotentialOrganDonorIdentification rdf:type owl:Class ;
+                                   rdfs:subClassOf owl:Thing ;
+                                   rdfs:comment "The process of identifying and reporting a deceased patient as a potential organ donor."@en ;
+                                   rdfs:label "Potential Organ Donor Identification"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/PotentialOrganDonorSuitabilityEvaluation
+:PotentialOrganDonorSuitabilityEvaluation rdf:type owl:Class ;
+                                          rdfs:subClassOf owl:Thing ;
+                                          rdfs:comment "The clinical assessment process to determine whether a potential donor and their organs are suitable for donation."@en ;
+                                          rdfs:label "Potential Organ Donor Suitability Evaluation"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/Recipient
+:Recipient rdf:type owl:Class ;
+           rdfs:subClassOf :Person ;
+           rdfs:comment "A patient who receives a donated organ through transplantation."@en ;
+           rdfs:label "Recipient"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/RelativeContraindication
+:RelativeContraindication rdf:type owl:Class ;
+                          rdfs:subClassOf :MedicalCondition ;
+                          rdfs:comment "A medical condition that requires specific clinical assessment before donation can proceed. It does not automatically exclude the donor."@en ;
+                          rdfs:label "Relative Contraindication"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/Role
+:Role rdf:type owl:Class ;
+      rdfs:subClassOf owl:Thing ;
+      rdfs:comment "A professional or institutional role played by a person in the organ donation process."@en ;
+      rdfs:label "Role"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/SupportToFamily
+:SupportToFamily rdf:type owl:Class ;
+                 rdfs:subClassOf :MeetingWithFamilyMembers ;
+                 rdfs:comment "A meeting or interaction dedicated to providing psychological and emotional support to the family of the deceased."@en ;
+                 rdfs:label "Support to Family"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/Test
+:Test rdf:type owl:Class ;
+      rdfs:subClassOf owl:Thing ,
+                      [ rdf:type owl:Restriction ;
+                        owl:onProperty :confirms ;
+                        owl:someValuesFrom :DiagnosisOfBrainDeath
+                      ] ;
+      rdfs:comment "A diagnostic test performed as part of the brain death assessment procedure."@en ;
+      rdfs:label "Test"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/Transplant
+:Transplant rdf:type owl:Class ;
+            rdfs:subClassOf owl:Thing ;
+            rdfs:comment "The surgical procedure in which a donated organ is implanted into a recipient."@en ;
+            rdfs:label "Transplant"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/TransplantSurgeons
+:TransplantSurgeons rdf:type owl:Class ;
+                    rdfs:subClassOf :OperatingRoomPersonnel ;
+                    rdfs:comment "Surgeons specialised in performing transplant operations."@en ;
+                    rdfs:label "Transplant Surgeons"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/Uterus
+:Uterus rdf:type owl:Class ;
+        rdfs:subClassOf :Organ ;
+        rdfs:comment "The uterus, a donatable reproductive organ."@en ;
+        rdfs:label "Uterus"@en .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/ActiveTubercolosis
+:ActiveTubercolosis rdf:type owl:NamedIndividual ,
+                             :AbsoluteContraindication ;
+                    rdfs:comment "Active tuberculosis is an absolute contraindication to organ donation due to the high risk of disease transmission."@en ;
+                    rdfs:label "Active Tuberculosis"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/ChronicKidneyDisease
+:ChronicKidneyDisease rdf:type owl:NamedIndividual ,
+                               :OrganSpecificContraindication ;
+                      rdfs:comment "Chronic kidney disease is an organ-specific contraindication that excludes the kidneys from donation."@en ;
+                      rdfs:label "Chronic Kidney Disease"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/Cirrhosis
+:Cirrhosis rdf:type owl:NamedIndividual ,
+                    :OrganSpecificContraindication ;
+           rdfs:comment "Liver cirrhosis is an organ-specific contraindication that excludes the liver from donation."@en ;
+           rdfs:label "Cirrhosis"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/HBVInfection
+:HBVInfection rdf:type owl:NamedIndividual ,
+                       :RelativeContraindication ;
+              rdfs:comment "Hepatitis B virus infection is a relative contraindication requiring specific clinical evaluation before donation."@en ;
+              rdfs:label "HBV Infection"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/HCVInfection
+:HCVInfection rdf:type owl:NamedIndividual ,
+                       :RelativeContraindication ;
+              rdfs:comment "Hepatitis C virus infection is a relative contraindication requiring specific clinical evaluation before donation."@en ;
+              rdfs:label "HCV Infection"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/HIVInfection
+:HIVInfection rdf:type owl:NamedIndividual ,
+                       :AbsoluteContraindication ;
+              rdfs:comment "HIV infection is an absolute contraindication to organ donation."@en ;
+              rdfs:label "HIV Infection"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/Hypertension
+:Hypertension rdf:type owl:NamedIndividual ,
+                       :RelativeContraindication ;
+              rdfs:comment "Severe hypertension is a relative contraindication that requires specific assessment, particularly for kidney and heart donation."@en ;
+              rdfs:label "Hypertension"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/MetastaticNeoplasm
+:MetastaticNeoplasm rdf:type owl:NamedIndividual ,
+                             :AbsoluteContraindication ;
+                    rdfs:comment "Active metastatic cancer is an absolute contraindication to organ donation due to the risk of neoplasm transmission."@en ;
+                    rdfs:label "Metastatic Neoplasm"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/PrionDisease
+:PrionDisease rdf:type owl:NamedIndividual ,
+                       :AbsoluteContraindication ;
+              rdfs:comment "Prion diseases such as Creutzfeldt-Jakob disease are absolute contraindications due to the risk of fatal transmission."@en ;
+              rdfs:label "Prion Disease"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/SepsisMultiDrugResistant
+:SepsisMultiDrugResistant rdf:type owl:NamedIndividual ,
+                                   :AbsoluteContraindication ;
+                          rdfs:comment "Sepsis caused by multi-drug resistant organisms is an absolute contraindication to organ donation."@en ;
+                          rdfs:label "Sepsis Multi-Drug Resistant"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/TreatedNeoplasm
+:TreatedNeoplasm rdf:type owl:NamedIndividual ,
+                          :RelativeContraindication ;
+                 rdfs:comment "A neoplasm that has been successfully treated is a relative contraindication requiring case-by-case assessment."@en ;
+                 rdfs:label "Treated Neoplasm"@en .
+
+
+###  https://gflucifer0.github.io/Organ-Donation-Process-Ontology/ODPO.ttl/UnknownEtiologyComa
+:UnknownEtiologyComa rdf:type owl:NamedIndividual ,
+                              :AbsoluteContraindication ;
+                     rdfs:comment "A coma of unknown cause is an absolute contraindication as the underlying condition cannot be excluded as a risk factor."@en ;
+                     rdfs:label "Unknown Etiology Coma"@en .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
